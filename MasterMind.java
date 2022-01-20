@@ -29,19 +29,40 @@ public class MasterMind {
 	private ArrayList<String> computerBoard = new ArrayList<String>();
 	private String[] options = {"R", "Y", "O", "G", "B", "P", "W"};
 	private int rowTracker = 0;
+	private String repeats;
 	
 	public void printRules(){
 	}
 	
 	public void setBoard(){
-		for (int i = 0; i < ROWS; i++){
+		for (int i = 0; i < 2 * ROWS; i++){
 			board.add(new ArrayList<String>());
-			for (int j = 0; j < COLUMNS; j++){
-				if (j >= 4){
-					board.get(i).add(j, " - ");
+			if (i % 2 == 1){
+				for (int j = 0; j < COLUMNS; j++){
+					if (j == 6 || j == 7){
+						board.get(i).add(j, " _ ");
+					}
+					else if (j == 4 || j == 5){
+						board.get(i).add(j,  "     ");
+					}
+					
+					else{
+						board.get(i).add(j, "   ");
+					}
+					
 				}
-				else{
-					board.get(i).add(j, " x ");
+			}
+			else{
+				for (int j = 0; j < COLUMNS; j++){
+					if (j == 4 || j == 5){
+						board.get(i).add(j, "     ");
+					}
+					else if (j == 6 || j == 7){
+						board.get(i).add(" _ ");
+					}
+					else{
+						board.get(i).add(j, " ? ");
+					}
 				}
 			}
 		}
@@ -49,8 +70,11 @@ public class MasterMind {
 	}
 	
 	public void printBoard(){
-		for (int i = 0; i < ROWS; i++){
+		for (int i = 0; i < 2 * ROWS; i++){
 			System.out.println(board.get(i));
+			if (i % 2 == 1){
+				System.out.println("--------------------------------------------");
+			}
 		}
 	}
 	
@@ -59,6 +83,7 @@ public class MasterMind {
 			int marker = (int) (Math.random() * (7));
 			computerBoard.add(i, options[marker]);
 		}
+		
 		System.out.println(computerBoard);
 	}
 	
@@ -75,19 +100,32 @@ public class MasterMind {
 			for (int j = 0; j < computerBoard.size(); j++){
 				if (guess.substring(i, i + 1).equals(computerBoard.get(j)) && i == j){
 					numRed++;
+					
 				}
 				if (guess.substring(i, i + 1).equals(computerBoard.get(j)) && i != j){
 					numWhite++;
 				}
 			}
 		}
-		for (int i = 0; i < numWhite; i++){
-			board.get(rowTracker).set(i+4, " w ");
-		}
+		System.out.println(numWhite);
+		System.out.print(numRed);
 		for (int i = 0; i < numRed; i++){
-			board.get(rowTracker).set(i+4, " r ");
+			if (board.get(rowTracker).get(i+6).equals(" _ ") && !board.get(rowTracker).get(i+6).equals(" r ")){
+				board.get(rowTracker).set(i+6, " r ");
+			}
+			else{
+				board.get(rowTracker + 1).set(i+6, " w ");
+			}
 		}
-		
+		for (int i = 0; i < numWhite; i++){
+			//System.out.print(board.get(rowTracker).get();
+			if (board.get(rowTracker).get(i+6).equals(" _ ") && !board.get(rowTracker).get(i+6).equals(" r ")){
+				board.get(rowTracker).set(i+6, " w ");
+			}
+			else{
+				board.get(rowTracker + 1).set(i+6, " w ");
+			}
+		}
 		rowTracker++;
 	}
 	
