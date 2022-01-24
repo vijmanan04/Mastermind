@@ -20,18 +20,26 @@
  * 
  * 
  */
-
+import java.util.Scanner;
 
 public class Game {
 	
 	public static void main (String[] args) {
 		MasterMind game = new MasterMind();
+		Scanner scan = new Scanner(System.in);
+		String ans;
 		
 		game.setBoard();
 		game.setComputerBoard();
-		
-		game.addPlayerGuess("RGBY");
 		game.printBoard();
+		
+		boolean win = false;
+		for (int i = 0; i < 9; i++){
+			System.out.print("Enter your guess as a string: ");
+			ans = scan.nextLine();
+			game.add(ans);
+			game.printBoard();
+		}
 		
 	}
 }
