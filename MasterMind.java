@@ -27,14 +27,25 @@ public class MasterMind {
 	private static int COLUMNS = 8;
 	private ArrayList<ArrayList<String>> board = new ArrayList<ArrayList<String>>(); // 4 secret pins and 4 score locations
 	private ArrayList<String> computerBoard = new ArrayList<String>();
-	private String[] options = {"R", "Y", "O", "G", "B", "P", "W"};
+	private ArrayList<String> options = new ArrayList<String>();
+	
+	public MasterMind(){
+		options.add("R");
+		options.add("Y");
+		options.add("O");
+		options.add("G");
+		options.add("B");
+		options.add("P");
+		options.add("W");
+	}
+
 	private int rowTracker = 0;
-	private String repeats;
+	private int[] ix = {-1, -1, -1, -1};
 	
 	public void printRules(){
 	}
 	
-	public void setBoard(){
+	public void setBoard(){ //set up the board and populate
 		for (int i = 0; i < 2 * ROWS; i++){
 			board.add(new ArrayList<String>());
 			if (i % 2 == 1){
@@ -78,16 +89,20 @@ public class MasterMind {
 		}
 	}
 	
-	public void setComputerBoard(){
-		for (int i = 0; i < COLUMNS - 4; i++){
-			int marker = (int) (Math.random() * (7));
-			computerBoard.add(i, options[marker]);
+	public void setComputerBoard(){ // randomly generate computer code
+		int counter  = 0;
+		while (options.size() != 3){
+			int marker = (int) (Math.random() * (options.size()));
+			computerBoard.add(counter, options.get(marker));
+			options.remove(marker);
+			counter++;
 		}
 		
 		System.out.println(computerBoard);
 	}
 	
-	public void addPlayerGuess(String guess){
+	public void addPlayerGuess(String guess){ // get player guesses as a string and add it to the board
+		guess = guess.toUpperCase();
 		int numWhite = 0;
 		int numRed = 0;
 		for (int i = 0; i < guess.length(); i++){
@@ -96,37 +111,79 @@ public class MasterMind {
 		
 		
 		// find number of white and red pins
-		for (int i = 0; i < guess.length(); i++){
+		for (int i = 0; i < guess.length(); i++){ // count the total number of red and white pins 
 			for (int j = 0; j < computerBoard.size(); j++){
-				if (guess.substring(i, i + 1).equals(computerBoard.get(j)) && i == j){
+				if (guess.substring(i, i + 1).equals(computerBoard.get(j)) && i == j){ // if the position is the same, add to red pins
 					numRed++;
 					
 				}
-				if (guess.substring(i, i + 1).equals(computerBoard.get(j)) && i != j){
+				if (guess.substring(i, i + 1).equals(computerBoard.get(j)) && i != j){ // if color is the same, add to white pins
 					numWhite++;
 				}
 			}
 		}
-		System.out.println(numWhite);
-		System.out.print(numRed);
+		System.out.println("White: " + numWhite);
+		System.out.println("Red: " + numRed);
+		int totalPlaceCounter = 0; // total counter keeps looping for both red and white pins so I can place red and white pins in one loop
+		
+		while (totalPlaceCounter != (numRed + numWhite)){ // place red pins first
+			for (int i = 0; i < numRed; i++){
+				if (totalPlaceCounter < 2){ // used to prevent index out of bounds error because use two rows to place pins
+					if (board.get(rowTracker).get(totalPlaceCounter+6).equals(" _ ")){
+						board.get(rowTracker).set(totalPlaceCounter+6, " r ");
+						totalPlaceCounter++; //  add to place counter when a place occurs to mark position that has been placed
+					}
+				}
+				else if (board.get(rowTracker + 1).get(totalPlaceCounter+6 - 2).equals(" _ ")){ // used to prevent index out of bounds error because use two rows to place pins
+					board.get(rowTracker + 1).set(totalPlaceCounter + 6 - 2, " r ");
+					totalPlaceCounter++; //  add to place counter when a place occurs to mark position that has been placed
+				}
+			}
+			
+			for (int i = 0; i < numWhite; i++){ // place white pins next
+				if (totalPlaceCounter < 2){
+					if (board.get(rowTracker).get(totalPlaceCounter+6).equals(" _ ")){ 
+						board.get(rowTracker).set(totalPlaceCounter+6, " w ");
+						totalPlaceCounter++; //  add to place counter when a place occurs to mark position that has been placed
+					}
+				}
+				
+				else if (board.get(rowTracker + 1).get(totalPlaceCounter+6 - 2).equals(" _ ")){
+					board.get(rowTracker + 1).set(totalPlaceCounter + 6 - 2, " w ");
+					totalPlaceCounter++; //  add to place counter when a place occurs to mark position that has been placed
+				}
+			}
+		}
+		/*
 		for (int i = 0; i < numRed; i++){
-			if (board.get(rowTracker).get(i+6).equals(" _ ") && !board.get(rowTracker).get(i+6).equals(" r ")){
+			if (i < 2 && board.get(rowTracker).get(i+6).equals(" _ ") && !board.get(rowTracker).get(i+6).equals(" r ")){
+				System.out.println("Red loop if: " + i);
 				board.get(rowTracker).set(i+6, " r ");
 			}
 			else{
-				board.get(rowTracker + 1).set(i+6, " w ");
+				System.out.println("Red loop else: " + i);
+				board.get(rowTracker + 1).set(i+6, " r ");
+			}
+			
+			for (int i = 0; i < 2; i++){
+				if (!board.get(rowTracker).get(i + 6).equals(" _ ")){
+					firstFilled++;
+				}
 			}
 		}
 		for (int i = 0; i < numWhite; i++){
 			//System.out.print(board.get(rowTracker).get();
-			if (board.get(rowTracker).get(i+6).equals(" _ ") && !board.get(rowTracker).get(i+6).equals(" r ")){
+			if (firstFilled < 2 && board.get(rowTracker).get(i+6).equals(" _ ") && !board.get(rowTracker).get(i+6).equals(" r ") && !board.get(rowTracker).get(i+6).equals(" w ")){
+				System.out.println("White loop if: " + i);
 				board.get(rowTracker).set(i+6, " w ");
 			}
 			else{
+				System.out.println("White loop else: " + i);
 				board.get(rowTracker + 1).set(i+6, " w ");
 			}
 		}
-		rowTracker++;
+		*/
+		rowTracker += 2; // increment row by two becuase use 2 rows per turn
 	}
 	
 	
