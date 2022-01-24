@@ -1,0 +1,4 @@
+January 24
+
+Worked on finsihing logic for red and white pins --> now working
+Making the driver code now
