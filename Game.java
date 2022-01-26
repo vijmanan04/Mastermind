@@ -31,14 +31,18 @@ public class Game {
 		
 		game.setBoard();
 		game.setComputerBoard();
-		game.printBoard();
+		
 		
 		boolean win = false;
 		for (int i = 0; i < 9; i++){
+			game.printBoard();
 			System.out.print("Enter your guess as a string: ");
 			ans = scan.nextLine();
-			game.add(ans);
+			
+			game.addPlayerGuess(ans);
 			game.printBoard();
+			game.incrementRowCounter();
+			System.out.println("\n\n\n\n");
 		}
 		
 	}
