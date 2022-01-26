@@ -23,6 +23,7 @@
 import java.util.ArrayList;
 
 public class MasterMind {
+	private int rowPrintCounter = 1;
 	private static int ROWS = 9;
 	private static int COLUMNS = 8;
 	private ArrayList<ArrayList<String>> board = new ArrayList<ArrayList<String>>(); // 4 secret pins and 4 score locations
@@ -45,6 +46,13 @@ public class MasterMind {
 	public void printRules(){
 	}
 	
+	public void incrementRowCounter(){
+		rowPrintCounter++;
+	}
+	
+	public void printArrow(){
+		System.out.print("\t\t <------Current Row Guess");
+	}
 	public void setBoard(){ //set up the board and populate
 		for (int i = 0; i < 2 * ROWS; i++){
 			board.add(new ArrayList<String>());
@@ -81,7 +89,8 @@ public class MasterMind {
 	}
 	
 	public void printBoard(){
-		for (int i = 0; i < 2 * ROWS; i++){
+		System.out.println(rowPrintCounter);
+		for (int i = 0; i < 2 * rowPrintCounter; i++){
 			System.out.println(board.get(i));
 			if (i % 2 == 1){
 				System.out.println("--------------------------------------------");
@@ -103,27 +112,98 @@ public class MasterMind {
 	
 	public void addPlayerGuess(String guess){ // get player guesses as a string and add it to the board
 		guess = guess.toUpperCase();
-		int numWhite = 0;
-		int numRed = 0;
 		for (int i = 0; i < guess.length(); i++){
 			board.get(rowTracker).set(i, " " + guess.substring(i, i+1) + " ");
 		}
 		
-		
+		/*
 		// find number of white and red pins
-		for (int i = 0; i < guess.length(); i++){ // count the total number of red and white pins 
-			for (int j = 0; j < computerBoard.size(); j++){
+		for (int j = 0; j < computerBoard.size(); j++){ // count the total number of red and white pins 
+			for (int i = j; i < guess.length(); i++){
 				if (guess.substring(i, i + 1).equals(computerBoard.get(j)) && i == j){ // if the position is the same, add to red pins
 					numRed++;
 					
 				}
 				if (guess.substring(i, i + 1).equals(computerBoard.get(j)) && i != j){ // if color is the same, add to white pins
 					numWhite++;
+					System.out.println("Guess Index: " + i + " = " + guess.substring(i, i + 1));
+					System.out.println("Computer Index: " + j + " = " + computerBoard.get(j));
 				}
 			}
 		}
-		System.out.println("White: " + numWhite);
-		System.out.println("Red: " + numRed);
+		*/
+		
+		int numRed = 0;
+		int yC = 0;
+		int oC = 0;
+		int gC = 0;
+		int bC = 0;
+		int pC = 0;
+		int wC = 0;
+		int rC = 0;
+		int numWhite = 0;
+	
+		for (int i = 0; i < guess.length(); i++){
+			if(guess.substring(i, i + 1).equals("R")){
+				rC++;
+			}
+				else if(guess.substring(i, i + 1).equals("Y")){
+				yC++;
+			}
+				else if(guess.substring(i, i + 1).equals("O")){
+				oC++;
+			}
+				else if(guess.substring(i, i + 1).equals("G")){
+				gC++;
+			}
+				else if(guess.substring(i, i + 1).equals("B")){
+				bC++;
+			}
+				else if(guess.substring(i, i + 1).equals("P")){
+				pC++;
+			}
+				else if(guess.substring(i, i + 1).equals("W")){
+				wC++;
+			}
+		}
+		
+		for (int i = 0; i < computerBoard.size(); i++){
+			if(computerBoard.get(i).equals("R") && rC>0 ){
+				numWhite++;
+				rC--;
+			}
+				else if(computerBoard.get(i).equals("Y") && yC>0){
+				numWhite++;
+				yC--;
+			}
+				else if(computerBoard.get(i).equals("O") && oC>0){
+				numWhite++;
+				oC--;
+			}
+				else if(computerBoard.get(i).equals("G") && gC>0){
+				numWhite++;
+				gC--;
+			}
+				else if(computerBoard.get(i).equals("B") && bC>0){
+				numWhite++;
+				bC--;
+			}
+				else if(computerBoard.get(i).equals("P") && pC>0){
+				numWhite++;
+				pC--;
+			}
+				else if(computerBoard.get(i).equals("W") && wC>0){
+				numWhite++;
+				wC--;
+			}
+		}
+		
+		for(int i = 0; i < computerBoard.size(); i++){ //Counts Num of Red pins
+			if(guess.substring(i, i + 1).equals(computerBoard.get(i))){
+				numRed++;
+			}
+		}
+		System.out.println("Num Red: " + numRed + " Num White: " + numWhite);
 		int totalPlaceCounter = 0; // total counter keeps looping for both red and white pins so I can place red and white pins in one loop
 		
 		while (totalPlaceCounter != (numRed + numWhite)){ // place red pins first
