@@ -49,14 +49,14 @@ public class MasterMind {
 		System.out.println("                 MasterMind                              ");
 		System.out.println("--------------------------------------------\n\n\n");
 	}
-	
+
 	public void printRules(int instruct){
 		if (instruct == 1){
 			System.out.print("Welcome to MasterMind! You are playing against a computer. \nThe computer will generate a random code of letters, \nrepresenting colors on the board.");
 			System.out.print("An example of a code is \' RGPY \', \nwhich means the computer code is \'Red, Green, Purple, Yellow.\' \nYour goal is to guess the 4 letters in the computer's code in the correct \norder in 9 guesses. ");
 			System.out.println("You will place your guesses on a board. \nPress enter to see how a board looks like. \n\n");
 		}
-		
+
 		if (instruct == 2){
 			System.out.print("The left side of the board will record your guesses \nand the right side of the board will mark your score \nfor that guess. ");
 			System.out.print("Scoring is done with red and white pins. \nA red pin means that you have placed a color in the same spot \nas the computer's code. A white pin means that you have correctly \nguessed a color, but is not in the correct location. ");
@@ -122,7 +122,7 @@ public class MasterMind {
 			}
 		}
 	}
-	
+
 	public void printBoard(int temp){
 		//System.out.println(rowPrintCounter);
 		System.out.println("     Player Guess                    Pins");
@@ -319,6 +319,27 @@ public class MasterMind {
 		rowTracker += 2; // increment row by two becuase use 2 rows per turn
 
 		return numRed;
+	}
+
+	public void printComputerBoard(){
+		System.out.print("The answer was: " + computerBoard.toString().replace(",", "").replace("[", "").replace("]", ""));
+	}
+
+	public boolean isInvalid(String ans){
+		ans = ans.toUpperCase();
+		while (ans.length() != 4){
+			System.out.print("Please enter 4 letters only: ");
+			return true;
+		}
+
+		for (int checker = 0; checker < ans.length(); checker++){
+			if (!ans.substring(checker, checker + 1).equals("Y") && !ans.substring(checker, checker + 1).equals("O") && !ans.substring(checker, checker + 1).equals("G") && !ans.substring(checker, checker + 1).equals("B") && !ans.substring(checker, checker + 1).equals("P") && !ans.substring(checker, checker + 1).equals("R") && !ans.substring(checker, checker + 1).equals("W")){
+				System.out.println("Invalid character: " + ans.substring(checker, checker + 1));
+				System.out.print("Please enter 4 valid letters: ");
+				return true;
+			}
+		}
+		return false;
 	}
 
 
