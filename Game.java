@@ -58,6 +58,8 @@ public class Game {
 
 		}
 
+		System.out.println("\n");
+
 		boolean repeats;
 
 		if (mode.equals("y")){
