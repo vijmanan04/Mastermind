@@ -26,7 +26,7 @@ import java.util.Scanner;
 
 public class Game {
 	public static void main (String[] args) {
-		
+
 		int redPins;
 		MasterMind game = new MasterMind();
 		Scanner scan = new Scanner(System.in);
@@ -47,19 +47,19 @@ public class Game {
 		game.printRules(2);
 		System.out.print("Press enter to continue .... \n\n");
 		ans = scan.nextLine();
-		
+
 		System.out.print("Would you like to play with repeats, meaning the computer can repeat colors? (Enter y or n): ");
 		mode = scan.nextLine();
-		
+
 		while (!(mode.equals("y") || mode.equals("n"))){
-			
+
 			System.out.print("Would you like to play with repeats? (Enter y or n): ");
 			mode = scan.nextLine();
-			
+
 		}
-		
+
 		boolean repeats;
-		
+
 		if (mode.equals("y")){
 			repeats = true;
 		}
@@ -68,17 +68,19 @@ public class Game {
 		}
 
 		game.setComputerBoard(repeats);
-		
+
 		boolean win = false;
 		for (int i = 0; i < 9; i++){
 			game.printBoard();
 			System.out.println("You may enter R, Y, O, G, B, P, W");
 			System.out.print("Enter your guess as a string: ");
 			ans = scan.nextLine();
-			while (ans.length() != 4){
-				System.out.print("Please enter 4 letters only: ");
+			ans = ans.toUpperCase();
+
+			while (game.isInvalid(ans)){
 				ans = scan.nextLine();
 			}
+
 
 			redPins = game.addPlayerGuess(ans);
 			game.printBoard();
@@ -86,11 +88,13 @@ public class Game {
 			System.out.println("\n\n\n\n");
 
 			if (redPins == 4){
+				game.printComputerBoard();
 				System.out.println("\nYou Win!!");
 				break;
 			}
 
 			if (i == 8){
+				game.printComputerBoard();
 				System.out.println("\nYou Lose. Better luck next time!\n");
 			}
 
