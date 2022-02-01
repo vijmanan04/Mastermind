@@ -44,7 +44,26 @@ public class MasterMind {
 	private int rowTracker = 0;
 	private int[] ix = {-1, -1, -1, -1};
 
-	public void printRules(){
+	public void printIntro(){
+		System.out.println("--------------------------------------------");
+		System.out.println("                 MasterMind                              ");
+		System.out.println("--------------------------------------------\n\n\n");
+	}
+	
+	public void printRules(int instruct){
+		if (instruct == 1){
+			System.out.print("Welcome to MasterMind! You are playing against a computer. \nThe computer will generate a random code of letters, \nrepresenting colors on the board.");
+			System.out.print("An example of a code is \' RGPY \', \nwhich means the computer code is \'Red, Green, Purple, Yellow.\' \nYour goal is to guess the 4 letters in the computer's code in the correct \norder in 9 guesses. ");
+			System.out.println("You will place your guesses on a board. \nPress enter to see how a board looks like. \n\n");
+		}
+		
+		if (instruct == 2){
+			System.out.print("The left side of the board will record your guesses \nand the right side of the board will mark your score \nfor that guess. ");
+			System.out.print("Scoring is done with red and white pins. \nA red pin means that you have placed a color in the same spot \nas the computer's code. A white pin means that you have correctly \nguessed a color, but is not in the correct location. ");
+			System.out.print("Your goal is \nto use this information of your guesses to guess the computer's code. \nThe color options are Red, Yellow, Orange, Green, Blue, Purple, White. \n");
+			System.out.println("Use the first letter of each word to enter a color. For example, type \n\'W\' if you want to enter White as one of your pins. You may only guess \n4 letters per turn. \n");
+			System.out.println("Good Luck!\n\n");
+		}
 	}
 
 	public void incrementRowCounter(){
@@ -103,18 +122,45 @@ public class MasterMind {
 			}
 		}
 	}
-
-	public void setComputerBoard(){ // randomly generate computer code
-		int counter  = 0;
-		while (options.size() != 3){
-			int marker = (int) (Math.random() * (options.size()));
-			computerBoard.add(counter, options.get(marker));
-			options.remove(marker);
-			counter++;
+	
+	public void printBoard(int temp){
+		//System.out.println(rowPrintCounter);
+		System.out.println("     Player Guess                    Pins");
+		for (int i = 0; i < 2 * 9; i++){
+			boardDisplay = board.get(i).toString().replace(",", " ").replace("[", "|").replace("]", "|");
+			System.out.print(boardDisplay);
+			if (i == 2 * 1 - 2){
+				System.out.println("\t <------Current Guessing Row: " + (i / 2 + 1) );
+			}
+			else if (i != 2 * 10 - 2){
+				System.out.println();
+			}
+			if (i % 2 == 1){
+				System.out.println("|------------------------------------------|");
+			}
 		}
-
-		//System.out.println(computerBoard);
 	}
+
+	public void setComputerBoard(boolean repeatsAllowed){ // randomly generate computer code
+		int counter  = 0;
+		if (!repeatsAllowed) {
+			while (options.size() != 3){
+				int marker = (int) (Math.random() * (options.size()));
+				computerBoard.add(counter, options.get(marker));
+				options.remove(marker);
+				counter++;
+			}
+		}
+		else{
+			for (int i = 0; i < 4; i++){
+				int marker = (int) (Math.random() * (options.size()));
+				computerBoard.add(counter, options.get(marker));
+				counter++;
+			}
+		}
+	}
+
+
 
 	public int addPlayerGuess(String guess){ // get player guesses as a string and add it to the board
 		guess = guess.toUpperCase();
