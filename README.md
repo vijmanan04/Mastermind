@@ -31,3 +31,8 @@ Mastermind.  (Main.java class if using Repl.it but ok)
 
 *Arrays - 1-2D array for player guesses
 	**1-1D array for the secret code
+	
+	
+	
+# UPDATE TO README
+
