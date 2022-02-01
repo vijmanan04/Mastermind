@@ -73,7 +73,7 @@ public class Game {
 		for (int i = 0; i < 9; i++){
 			game.printBoard();
 			System.out.println("You may enter R, Y, O, G, B, P, W");
-			System.out.print("Enter your guess as a string: ");
+			System.out.print("Enter your guess as a string without spaces: ");
 			ans = scan.nextLine();
 			ans = ans.toUpperCase();
 
