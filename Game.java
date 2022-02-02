@@ -28,12 +28,11 @@
 import java.util.Scanner;
 
 
-// This class is the tester/driver progam that plays 
+// This class is the tester/driver progam that interacts with the user and draws from the MasterMind class
 public class Game {
 	public static void main (String[] args) {
 		
-		/**
-		*
+		/*
 		* This class is the driver code for the MasterMind class. It creates an instance called game,
 		* and the game steps through the necessary functions.
 		*/
