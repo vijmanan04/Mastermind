@@ -64,6 +64,10 @@ public class MasterMind {
 		System.out.println("--------------------------------------------\n\n\n");
 	}
 
+	// helps with user interface and orients the player to the game
+	/**
+	 * @param instruct an integer for which set of intructions are necessary; paramater passed in depends on the stage the player has reached in Tester
+	 * */
 	public void printRules(int instruct){
 		if (instruct == 1){
 			System.out.print("Welcome to MasterMind! You are playing against a computer. \nThe computer will generate a random code of letters, \nrepresenting colors on the board.");
@@ -80,17 +84,18 @@ public class MasterMind {
 		}
 	}
 
+	// this moves the rows forward because the game prints one row at a time
 	public void incrementRowCounter(){
 		rowPrintCounter++;
 	}
 
-	public void setBoard(){ //set up the board and populate
+	public void setBoard(){ //set up the board and populate all values
 		for (int i = 0; i < 2 * ROWS; i++){
 			board.add(new ArrayList<String>());
-			if (i % 2 == 1){
+			if (i % 2 == 1){ // since each row has 2 sub-rows , with only one of them having any user input, make the first one (odd numbered) accept any inputs
 				for (int j = 0; j < COLUMNS; j++){
 					if (j == 6 || j == 7){
-						board.get(i).add(j, " _ ");
+						board.get(i).add(j, " _ "); // need the get functions first because dealing with 2d ArrayList
 					}
 					else if (j == 4 || j == 5){
 						board.get(i).add(j,  "     ");
@@ -102,7 +107,7 @@ public class MasterMind {
 
 				}
 			}
-			else{
+			else{ // since each row has 2 sub-rows , with only one of them having any user input, make the second one (even numbered) accept any inputs
 				for (int j = 0; j < COLUMNS; j++){
 					if (j == 4 || j == 5){
 						board.get(i).add(j, "     ");
@@ -118,8 +123,9 @@ public class MasterMind {
 		}
 
 	}
-
-	public void printBoard(){
+	
+	// special function to print the board and make it get bigger as the user inputs more inputs; this is overloaded
+	public void printBoard(){ 
 		//System.out.println(rowPrintCounter);
 		System.out.println("     Player Guess                    Pins");
 		for (int i = 0; i < 2 * rowPrintCounter; i++){
@@ -136,7 +142,8 @@ public class MasterMind {
 			}
 		}
 	}
-
+	
+	//  function to print the full board; this is the overloaded part of the special print function
 	public void printBoard(int temp){
 		//System.out.println(rowPrintCounter);
 		System.out.println("     Player Guess                    Pins");
@@ -182,7 +189,7 @@ public class MasterMind {
 			board.get(rowTracker).set(i, " " + guess.substring(i, i+1) + " ");
 		}
 
-		/*
+		/* THIS WAS A FIRST ATTEMPT
 		// find number of white and red pins
 		for (int j = 0; j < computerBoard.size(); j++){ // count the total number of red and white pins
 			for (int i = j; i < guess.length(); i++){
@@ -199,6 +206,7 @@ public class MasterMind {
 		}
 		*/
 
+		// get counts for each color count; numRed and numWhite count the number of pins
 		int numRed = 0;
 		int yC = 0;
 		int oC = 0;
@@ -208,7 +216,7 @@ public class MasterMind {
 		int wC = 0;
 		int rC = 0;
 		int numWhite = 0;
-
+		// increment individual counts of each variable if it occurs
 		for (int i = 0; i < guess.length(); i++){
 			if(guess.substring(i, i + 1).equals("R")){
 				rC++;
@@ -233,6 +241,7 @@ public class MasterMind {
 			}
 		}
 
+		// add to white count and subtract from total count (because already account for) for each in pin in th computerBoard --> get number of white but this overcounts 
 		for (int i = 0; i < computerBoard.size(); i++){
 			if(computerBoard.get(i).equals("R") && rC>0 ){
 				numWhite++;
@@ -269,7 +278,7 @@ public class MasterMind {
 				numRed++;
 			}
 		}
-		numWhite -= numRed;
+		numWhite -= numRed; // correct the overcounting that was done orignally in the white count for-loop 
 		// System.out.println("Num Red: " + numRed + " Num White: " + numWhite);
 		int totalPlaceCounter = 0; // total counter keeps looping for both red and white pins so I can place red and white pins in one loop
 
@@ -301,7 +310,7 @@ public class MasterMind {
 				}
 			}
 		}
-		/*
+		/* THIS WAS AN INITIAL ATTEMPT
 		for (int i = 0; i < numRed; i++){
 			if (i < 2 && board.get(rowTracker).get(i+6).equals(" _ ") && !board.get(rowTracker).get(i+6).equals(" r ")){
 				System.out.println("Red loop if: " + i);
@@ -339,6 +348,10 @@ public class MasterMind {
 		System.out.print("The answer was: " + computerBoard.toString().replace(",", "").replace("[", "").replace("]", ""));
 	}
 
+	/**
+	 * @param ans should be a string of the guess that the person is inputting
+	 * @return isInvalid Returns true if the answer is invalid (mulltiple checking done; string length and invalid characters)
+	 * */
 	public boolean isInvalid(String ans){
 		ans = ans.toUpperCase();
 		while (ans.length() != 4){
