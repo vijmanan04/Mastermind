@@ -34,7 +34,8 @@ public class Game {
 		String mode;
 
 		game.setBoard();
-
+		
+		// Print intro screen and user interface
 		game.printIntro();
 		System.out.print("Press enter to continue .... \n\n");
 		ans = scan.nextLine();
@@ -72,6 +73,7 @@ public class Game {
 		game.setComputerBoard(repeats);
 
 		boolean win = false;
+		// Keep on looping until the game ends or until 4 reds are found --> the same process should occur in each loop
 		for (int i = 0; i < 9; i++){
 			game.printBoard();
 			System.out.println("You may enter R, Y, O, G, B, P, W");
@@ -79,16 +81,18 @@ public class Game {
 			ans = scan.nextLine();
 			ans = ans.toUpperCase();
 
-			while (game.isInvalid(ans)){
+			while (game.isInvalid(ans)){ // isInvalid returns a boolean until the the checking is complete
 				ans = scan.nextLine();
 			}
 
 
+			// this manages the user interface however each off the functions handle making the screen look nice
 			redPins = game.addPlayerGuess(ans);
 			game.printBoard();
 			game.incrementRowCounter();
 			System.out.println("\n\n\n\n");
 
+			// game should end if the number of redPins should be 4
 			if (redPins == 4){
 				game.printComputerBoard();
 				System.out.println("\nYou Win!!");
