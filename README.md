@@ -35,4 +35,10 @@ Mastermind.  (Main.java class if using Repl.it but ok)
 	
 	
 # UPDATE TO README
+**In this project, I re-created the game MasterMind on a computer terminal. There were many difficulties I came across when programming the game. **Firstly, it was getting used to using ArrayLists as opposed to arrays to print the MasterMind board, populate the board, and other necessary 
+**mutation functions on the array lists. Furthermore, the nested structure of the ArrayList made the accesing of elements and adding of elements more complicated, however, now I am pretty comfortable with using them. 
+
+**In terms of the gameplay, I used a mentality where I imagined that I was playing the game, so that I could easily mentally walk through the what elements of the game needed to be programmed. This process also allowed me to focus on the user interaction that a player would have with the computer, so I was able to design the game in a way that was comfortable for the player to interact with. Because of this mentality, I believe that I was able to create more compelling UI than I would have had I approached this problem the way I usually appraoched other programming tasks.
+
+**The most challening aspect of this code was the scoring mechanisms when checking with repeats. I was initially trying to make my code efficent by checking using loop structures instead of multiple if-statements. However, I realized that I would need to keep a counter of each color placed by the user using multiple if-statments if I wanted the repeat functionality in the game.
 
