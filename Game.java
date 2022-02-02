@@ -26,6 +26,12 @@ import java.util.Scanner;
 
 public class Game {
 	public static void main (String[] args) {
+		
+		/**
+		*
+		* This class is the driver code for the MasterMind class. It creates an instance called game,
+		* and the game steps through the necessary functions.
+		*/
 
 		int redPins;
 		MasterMind game = new MasterMind();
