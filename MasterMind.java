@@ -1,3 +1,10 @@
+/**
+ * @author Manan Vij
+ * @version MasterMind V. 1
+ * @since Feburary 2nd, 2022
+ * */
+ 
+
 /*
  * MasterMind.java
  *
@@ -22,6 +29,12 @@
  */
 import java.util.ArrayList;
 
+/*
+ * This class contains all the neccesary functions to make the Game work and contains gameplay functions as well as additional helper functions.
+ * It makes use of ArrayLists as the primary data structure to move the game forward.
+ * It also contains print functions for the user interface .
+ * */
+
 public class MasterMind {
 	private int rowPrintCounter = 1;
 	private static int ROWS = 9;
@@ -30,7 +43,8 @@ public class MasterMind {
 	private ArrayList<String> computerBoard = new ArrayList<String>();
 	private ArrayList<String> options = new ArrayList<String>();
 	private String boardDisplay = board.toString();
-
+	
+        // initializes all the possible color options that are allowed in the game when the game is created
 	public MasterMind(){
 		options.add("R");
 		options.add("Y");
