@@ -1,3 +1,8 @@
+/**
+ * @author Manan Vij
+ * @version  Game V. 1
+ * */
+ 
 /*
  * Game.java
  *
@@ -23,7 +28,7 @@
 import java.util.Scanner;
 
 
-
+// This class is the tester/driver progam that plays 
 public class Game {
 	public static void main (String[] args) {
 		
@@ -57,7 +62,8 @@ public class Game {
 
 		System.out.print("Would you like to play with repeats, meaning the computer may (but not necessarily) repeat colors? (Enter y or n): ");
 		mode = scan.nextLine();
-
+		
+		// The following lines of code do processig on the input by checking for invalid strings
 		while (!(mode.equals("y") || mode.equals("n"))){
 
 			System.out.print("Would you like to play with repeats? (Enter y or n): ");
@@ -75,6 +81,7 @@ public class Game {
 		else{
 			repeats = false;
 		}
+		//End section for answer processing
 
 		game.setComputerBoard(repeats);
 
@@ -90,7 +97,7 @@ public class Game {
 			while (game.isInvalid(ans)){ // isInvalid returns a boolean until the the checking is complete
 				ans = scan.nextLine();
 			}
-
+			//Everything answer beyond this point will be fine due to the error checking procedures
 
 			// this manages the user interface however each off the functions handle making the screen look nice
 			redPins = game.addPlayerGuess(ans);
