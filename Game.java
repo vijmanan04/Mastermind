@@ -48,7 +48,7 @@ public class Game {
 		System.out.print("Press enter to continue .... \n\n");
 		ans = scan.nextLine();
 
-		System.out.print("Would you like to play with repeats, meaning the computer can repeat colors? (Enter y or n): ");
+		System.out.print("Would you like to play with repeats, meaning the computer may (but not necessarily) repeat colors? (Enter y or n): ");
 		mode = scan.nextLine();
 
 		while (!(mode.equals("y") || mode.equals("n"))){
