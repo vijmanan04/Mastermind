@@ -72,7 +72,7 @@ public class MasterMind {
 		if (instruct == 1){
 			System.out.print("Welcome to MasterMind! You are playing against a computer. \nThe computer will generate a random code of letters, \nrepresenting colors on the board.");
 			System.out.print("An example of a code is \' RGPY \', \nwhich means the computer code is \'Red, Green, Purple, Yellow.\' \nYour goal is to guess the 4 letters in the computer's code in the correct \norder in 9 guesses. ");
-			System.out.println("You will place your guesses on a board. \nPress enter to see how a board looks like. \n\n");
+			System.out.println("You will place your guesses on a board and the baord will grow bigger as you progress in the game. \nPress enter to see how a full board looks like. \n\n");
 		}
 
 		if (instruct == 2){
